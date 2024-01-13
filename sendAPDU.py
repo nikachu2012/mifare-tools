@@ -11,5 +11,5 @@ def sendAPDU(data:list[int], connection=None) -> tuple:
                 data
             )
         except Exception as e:
-            print("\033[31mERROR - Can't send APDU\033[0m")
+            print("\033[31mERROR - Couldn't send APDU\033[0m")
             raise e
