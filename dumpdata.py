@@ -99,7 +99,7 @@ if __name__ == "__main__":
         print("TIPS: Timeout in 30 seconds.")
         readersList = smartcard.System.readers()
 
-        if len(readersList) >= args.reader:
+        if len(readersList) > args.reader:
             cardtype = isMifareClassic1K()
             cardreq = CardRequest(cardType=cardtype, timeout=30)
 
@@ -117,3 +117,8 @@ if __name__ == "__main__":
                 [0xFF, 0xCA, 0x00, 0x00, 0x00]
             )
             print(f"UID: {toHexString(data)}")
+
+            
+
+        else:
+            print(f"Selected reader({args.reader}) can't connect.")
