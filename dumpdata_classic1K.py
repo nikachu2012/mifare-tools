@@ -24,7 +24,7 @@ def dumpdata_classic1K():
         for i, e in enumerate(readers):
             if str(e) == target:
                 return i
-        return None
+        raise
     
     def fillKeyA():
         fillv = dpg.get_value(keyAarray[0])
