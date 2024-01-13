@@ -110,7 +110,7 @@ if __name__ == "__main__":
             cardservice = cardreq.waitforcard()
             cardservice.connection.connect()
 
-            print(f"\033[32mMifare Classic Detected\033[0m")
+            print(f"\033[32mMifare Classic 1K Detected\033[0m")
             print(f"ATR: {toHexString(cardservice.connection.getATR())}")
 
             data, sw1, sw2 = cardservice.connection.transmit(
