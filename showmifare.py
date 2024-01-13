@@ -15,9 +15,7 @@ import dearpygui.dearpygui as dpg
 
 def showmifare():
     readers = smartcard.System.readers()
-
-    selected = ""
-
+    
     def getIndex(target):
         for i, e in enumerate(readers):
             if str(e) == target:
