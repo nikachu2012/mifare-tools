@@ -10,7 +10,7 @@ from smartcard.util import toHexString, toBytes
 
 # made lib
 from isMifareClassic1K import isMifareClassic1K
-from dumpdata import dumpdata
+from dumpdata_classic1K import dumpdata_classic1K
 from sendAPDU import sendAPDU
 from showmifare import showmifare
 
@@ -50,6 +50,7 @@ with dpg.viewport_menu_bar():
 with dpg.window(label="Select action", width=300, height=400):
     dpg.add_text("Select action!")
     dpg.add_button(label="Display Mifare Info", callback=showmifare)
+    dpg.add_button(label="Dump data (Mifare Classic 1K)", callback=dumpdata_classic1K)
     dpg.add_input_text(label="string")
     dpg.add_slider_float(label="float")
 
