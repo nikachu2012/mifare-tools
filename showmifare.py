@@ -38,18 +38,19 @@ def showmifare():
                 break
             except NoCardException as e:
                 continue
-
-        uiddata, sw1, sw2 = sendAPDU(
-            [0xFF, 0xCA, 0x00, 0x00, 0x00], reader_connection
-        )
-
-        if sw1 != 0x90 and sw2 != 0x00:
-            uiddata == None
-        
-        dpg.set_value(status, "Status: Card read.")
         
         atr = reader_connection.getATR()
         if isMifareClassic1K().matches(atr):
+            uiddata, sw1, sw2 = sendAPDU(
+                [0xFF, 0xCA, 0x00, 0x00, 0x00], reader_connection
+            )
+
+            if sw1 != 0x90 and sw2 != 0x00:
+                uiddata == None
+
+            dpg.set_value(status, "Status: Card read.")
+
+
             dpg.configure_item(cardStatusText, color=[0,255,0,255])
             dpg.set_value(cardStatusText, "Mifare Classic 1K Detected")
             dpg.configure_item(cardStatusText, show=True)
