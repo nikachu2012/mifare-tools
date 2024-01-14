@@ -11,7 +11,8 @@ from datetime import datetime
 from isMifareClassic1K import isMifareClassic1K
 from sendAPDU import sendAPDU, sendAPDUwithLOG
 from logger import log
-from convertBinaryArray import convertBinaryArrayToStr
+from convertBinaryArray import convertBinaryArrayOnlyHex, convertBinaryArrayToBytes, convertBinaryArrayToStr
+from save import saveFile, saveFileBinary
 
 import dearpygui.dearpygui as dpg
 
@@ -41,7 +42,7 @@ def dumpdata_classic1K():
     def getData(sender):
         starttime = datetime.now().isoformat()
         with dpg.window(label=f"Process Status ({starttime})", width=600, height=400, pos=(300,0)):
-            savebtn = dpg.add_button(label="Save to file")
+            savebtn = dpg.add_button(label="Save to file", callback=lambda: saveFile(dpg.get_value(logText)))
             logText = dpg.add_text()
 
         log(logText, "started: Dump data (Mifare Classic 1K)")
@@ -147,10 +148,13 @@ def dumpdata_classic1K():
                 log(logText, f"status: All dump success!")
 
                 with dpg.window(label=f"Dumped Data ({starttime})", width=600, height=400, pos=(300,0)):
+                    with dpg.menu_bar():
+                        with dpg.menu(label="Save"):
+                            dpg.add_menu_item(label="Sector, Block, Hex, ASCII", callback=lambda: saveFile(convertBinaryArrayToStr(sector_data, True)))
+                            dpg.add_menu_item(label="Hex only text", callback=lambda: saveFile(convertBinaryArrayOnlyHex(sector_data)))
+                            dpg.add_menu_item(label="Hex", callback=lambda: saveFileBinary(convertBinaryArrayToBytes(sector_data)))
+                            
                     resultView = dpg.add_input_text(multiline=True, readonly=True, width=-1, height=-1)
-
-                    print(convertBinaryArrayToStr(sector_data, True))
-
                     dpg.set_value(resultView, convertBinaryArrayToStr(sector_data, True))
                 
                 dpg.set_value(status, "Status: Success! (Next Ready)")

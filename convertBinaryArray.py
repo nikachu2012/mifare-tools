@@ -11,10 +11,8 @@ def convertBinaryArrayToStr(data: list[list[int]], hasASCII: bool) -> str:
 
                 if hasASCII:
                     result += f" <                >"
-
                 result += "\n"
                 continue
-
             toConvertASCII = ""
 
             for j in e:
@@ -29,13 +27,38 @@ def convertBinaryArrayToStr(data: list[list[int]], hasASCII: bool) -> str:
                 sectorText = f"         "
 
             result += f"{sectorText} Block {i:<3}: {toHexString(e):<47}"
-            
             if hasASCII:
                 result += f" <{toConvertASCII:<16}>"
 
             result += "\n"
-
         return result
+    except Exception as e:
+        raise e
+
+def convertBinaryArrayOnlyHex(data: list[list[int]]) -> str:
+    result = ""
+    blankline = " " * 47
+    try:
+        for e in data:
+            if e is []:
+                result += blankline
+            
+            result += f"{toHexString(e):<47}\n"
         
+        return result
+    except Exception as e:
+        raise e
+
+def convertBinaryArrayToBytes(data: list[list[int]]) -> bytes:
+    result = b""
+
+    try:
+        for e in data:
+            if e is []:
+                result += b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+            
+            result += bytes(e)
+        
+        return result
     except Exception as e:
         raise e
